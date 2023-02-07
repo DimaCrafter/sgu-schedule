@@ -2,7 +2,7 @@
 	<div class="title">Настройки</div>
 	{#if $syncState.status != 'no-data'}
 		<!-- svelte-ignore a11y-missing-attribute -->
-		<a on:click={() => history.back()} class="action" title="Перейти назад"><Icon name="x" /></a>
+		<a on:click={goBack} class="action" title="Перейти назад"><Icon name="x" /></a>
 	{/if}
 </header>
 <main id="settings">
@@ -112,7 +112,12 @@
 	{:else}
 		<div class="select-list">
 			{#each subgroups as subgroup}
-				<Checkbox bind:target={$settings.subgroups} value={subgroup} class="item">{subgroup}</Checkbox>
+				<Checkbox bind:target={$settings.subgroups} value={subgroup.name} class="item">
+					{subgroup.name}
+					{#each subgroup.diff as { subject, teacher }}
+						<div>{subject}: {teacher}</div>
+					{/each}
+				</Checkbox>
 			{/each}
 		</div>
 		<footer>
@@ -125,6 +130,7 @@
 <script>
 import API from 'dc-api-client'
 import { onMount } from 'svelte'
+import { goto } from '$app/navigation'
 import { settings, sync, syncState } from '../../utils/storage'
 
 import Icon from '../../components/Icon.svelte'
@@ -176,6 +182,13 @@ async function applyGroup (group) {
 	if (res.success) subgroups = res.msg;
 	else subgroups = { error: res.msg };
 }
+
+function goBack() {
+	console.log(history.length);
+	if(history.length == 1) goto('/', { replaceState: true });
+	else history.back();
+}
+
 </script>
 
 <style>

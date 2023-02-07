@@ -38,7 +38,7 @@ module.exports = class Info extends HttpController {
 
 		// todo: cron
 		const schedule = await getSchedule(this.query.faculty, this.query.group);
-		return schedule.groups;
+		return schedule.subgroups;
 	}
 
 	async schedule () {

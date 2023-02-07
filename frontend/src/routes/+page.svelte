@@ -15,7 +15,7 @@
 <main>
 	{#if $schedule}
 		{#each todaySchedule as lesson}
-			<div class="lesson">
+			<div class="lesson" class:active={now >= lesson.startTimestamp && now <= lesson.endTimestamp}>
 				<div class="time">
 					<Icon name="clock" />с {lesson.start} по {lesson.end}
 				</div>
@@ -46,7 +46,7 @@
 
 <script>
 import Icon from '../components/Icon.svelte'
-import { DAYS_OF_WEEK, MONTH_NAMES, weekType } from '../utils/date'
+import { DAYS_OF_WEEK, MONTH_NAMES, weekType, parseTimestamp } from '../utils/date'
 import { settings, schedule } from '../utils/storage'
 
 const LESSON_TYPES = {
@@ -62,13 +62,21 @@ currentWeek.setDate(currentWeek.getDate() - currentWeek.getDay() + 1);
 const PARITIES = ['Числитель', 'Знаменатель'];
 
 let todaySchedule, parity;
+let now = 0;
+setInterval(() => now = Date.now(), 60000);
+
 $: {
 	parity = weekType(currentWeek);
 
+	const today = new Date();
+	today.setHours(0, 0, 0, 0);
+	const todayDay = today.getDay();
 	todaySchedule = $schedule && $schedule[currentDay ? currentDay - 1 : 6]
 		.map(lesson => ({
 			start: lesson.start,
 			end: lesson.end,
+			startTimestamp: todayDay == currentDay ? parseTimestamp(today, lesson.start) : Infinity,
+			endTimestamp: todayDay == currentDay ? parseTimestamp(today, lesson.end) : Infinity,
 			...lesson.variants.find(variant => {
 				if (variant.group && !$settings.subgroups.includes(variant.group)) return false;
 				if (variant.parity !== undefined && variant.parity != parity) return false;

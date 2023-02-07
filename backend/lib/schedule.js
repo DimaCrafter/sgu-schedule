@@ -36,7 +36,7 @@ function parse (raw) {
 	}
 
 	let days = [[], [], [], [], [], [], []];
-	let groups = new Set();
+	let subgroups = new Set();
 	for (let rowIndex = 2; rowIndex < rows.length; rowIndex++) {
 		const cols = rows[rowIndex].Cell;
 		const time = cols.shift().Data._text.split(/-\s*/);
@@ -71,7 +71,7 @@ function parse (raw) {
 							i++;
 						} else {
 							variant.group = line;
-							groups.add(line);
+							subgroups.add(line);
 							break;
 						}
 					case 2:
@@ -91,7 +91,33 @@ function parse (raw) {
 		}
 	}
 
-	return { days, groups: Array.from(groups) };
+	return { days, subgroups: getSubgroupsDiff(days, Array.from(subgroups)) };
+}
+
+function getSubgroupsDiff (days, subgroups) {
+	let result = [];
+	for (const groupName of subgroups) {
+		let diff = [];
+		for (const day of days) {
+			for (const subject of day) {
+				for (const variant of subject.variants) {
+					if (variant.group != groupName) continue;
+					if (diff.find(item => item.subject == variant.name)) continue;
+
+					diff.push({ subject: variant.name, teacher: variant.teacher });
+					// Один вариант - одна подгруппа
+					break;
+				}
+			}
+		}
+
+		result.push({
+			name: groupName,
+			diff
+		});
+	}
+
+	return result;
 }
 
 exports.getSchedule = async (faculty, group) => {

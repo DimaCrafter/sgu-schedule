@@ -27,3 +27,16 @@ export function weekType (timestamp) {
 	// Чётность количества недель между начальной неделей и текущей является чётностью недели
 	return Math.floor((current.getTime() - start.getTime()) / WEEK) % 2;
 }
+
+/**
+ * @param {Date} today
+ * @param {string} time
+ * @returns {number}
+ */
+export function parseTimestamp (today, time) {
+	console.log(today, time);
+	let [hours, minutes] = time.split(':', 2);
+	today.setHours(parseInt(hours));
+	today.setMinutes(parseInt(minutes));
+	return today.getTime();
+}

@@ -31,7 +31,13 @@ function toggle () {
 
 .checkbox {
     display: flex;
+	flex-wrap: wrap;
     align-items: center;
+}
+
+.checkbox > :global(div) {
+    margin-top: 8px;
+    font-size: 12px;
 }
 
 .checkbox.checked > i:before {
