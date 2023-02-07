@@ -1,0 +1,15 @@
+{
+	"name": "schedule-backend",
+	"version": "1.2.0",
+	"private": true,
+	"scripts": {
+		"start": "dc-api-core",
+		"dev": "dc-api-core --dev",
+    	"pm2": "pm2 start ./node_modules/dc-api-core --name schedule-backend"
+	},
+	"dependencies": {
+		"cron": "^2.1.0",
+		"dc-api-core": "^0.3.3",
+		"sax": "^1.2.4"
+	}
+}

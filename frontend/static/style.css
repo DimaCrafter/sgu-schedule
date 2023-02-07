@@ -1,0 +1,246 @@
+* { font-family: inherit; }
+input, textarea, button, select, a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    position: fixed;
+    height: 100%;
+    font-family: 'Open Sans', Arial, sans-serif;
+    margin: 0;
+    background-color: #fff;
+    line-height: 1;
+    color: #151515;
+    overflow: hidden;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100vw;
+}
+
+header {
+    padding: 12px;
+    color: #fff;
+    background: linear-gradient(180deg, #404040 0%, #252525 100%);
+}
+
+header > .title {
+    font-size: 16px;
+    line-height: 22px;
+    text-align: center;
+}
+
+header > .action {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    color: #fff;
+    font-size: 22px;
+    user-select: none;
+}
+
+.calendar > .month,
+.calendar > .parity {
+    text-align: center;
+}
+
+.calendar > .month {
+    font-size: 13px;
+}
+
+.calendar > .parity {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #9e9e9e;
+    text-shadow: rgba(0, 0, 0, 0.5) 0 1px 3px;
+}
+
+.calendar > .days {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+}
+
+.calendar > .days > .day {
+    position: relative;
+    text-align: center;
+    color: #cacaca;
+    transition: 250ms color;
+    z-index: 0;
+}
+
+.calendar > .days > .day:before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
+    background: linear-gradient(180deg, #6FA8FF 0%, #3A7CFF 45%, #476FFF 60%, #305DFF 100%);
+    transition: 250ms opacity;
+    opacity: 0;
+    z-index: -1;
+}
+
+.calendar > .days > .day > .week-day {
+    margin-top: 7px;
+    margin-bottom: 5px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.calendar > .days > .day > span {
+    display: block;
+    width: 32px;
+    line-height: 32px;
+    font-size: 12px;
+    border: 1px solid #545454;
+    border-radius: 8px;
+    transition: 250ms border-color;
+}
+
+.calendar > .days > .day.muted { opacity: 0.5; }
+
+.calendar > .days > .day.active { color: #fff; opacity: 1; }
+.calendar > .days > .day.active:before { opacity: 1; }
+.calendar > .days > .day.active > span { border-color: transparent; }
+
+main {
+    padding: 12px;
+    overflow-y: auto;
+}
+
+.btn {
+    border: none;
+    padding: 9px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.btn.primary {
+    background: linear-gradient(180deg, #6FA8FF 0%, #3A7CFF 44.27%, #476FFF 58.85%, #305DFF 100%);
+    color: #fff;
+}
+
+.btn.secondary {
+    background: linear-gradient(180deg, #F6F6F6 0%, #DEDEDE 100%);
+    box-shadow: inset #e7e7e7 0 0 0 1px;
+}
+
+.btn > .icon {
+    margin-right: 6px;
+    font-size: 16px;
+    vertical-align: top;
+}
+
+.select-list, .btn-list {
+    max-height: 65vh;
+    overflow-y: auto;
+    margin-bottom: 6px;
+}
+
+.select-list > .item {
+    border-bottom: 1px solid #E6E6E6;
+    font-size: 14px;
+    line-height: 1.25;
+    padding: 8px 12px;
+}
+
+.select-list > .item:active {
+    background-color: #f5f5f5;
+}
+
+.btn-list { text-align: center; }
+.btn-list > .btn {
+    display: inline-block;
+    margin: 0 6px;
+    margin-top: 12px;
+}
+
+.action {
+    margin-top: -12px;
+    padding: 12px;
+    border: none;
+    background: none;
+    user-select: none;
+    font-size: 13px;
+}
+
+.action.muted { color: #808080; }
+.action.muted:hover { color: #252525; }
+
+.action.primary { color: #3A7CFF; }
+.action.primary:hover { color: #0055ff; }
+
+.lesson {
+    position: relative;
+    margin-bottom: 12px;
+    padding: 12px;
+    background: linear-gradient(180deg, #FAFAFA 0%, #F5F5F5 100%);
+    border: 1px solid #E6E6E6;
+    border-radius: 8px;
+}
+
+.lesson .icon {
+    margin-right: 6px;
+    font-size: 12px;
+    vertical-align: top;
+}
+
+.lesson > .time {
+    font-weight: 400;
+    font-size: 12px;
+    color: #808080;
+}
+
+.lesson > .type {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    line-height: 10px;
+    color: #fff;
+    border: 1px solid transparent;
+}
+
+.lecture { background-color: #23C63D; }
+.practice { background-color: #2292FA; }
+.lab { background-color: #fa8b22; }
+
+.lesson > .name {
+    margin-top: 6px;
+    font-size: 17px;
+    line-height: 1.25;
+    /* Более красивое и экономичное утолщение шрифта до 450 */
+    text-shadow: currentColor 0.25px 0 0;
+}
+
+.lesson > .info {
+    display: flex;
+    margin-top: 12px;
+    font-size: 14px;
+    justify-content: space-between;
+}
+
+.lesson.active {
+    background: linear-gradient(180deg, #488AFF 0%, #3072F5 100%);
+    border-color: #3C7AEA;
+    color: #fff;
+}
+
+.lesson.active > .time {
+    color: #b3cefe;
+}
+
+.lesson.active > .info {
+    color: #D6E4FD;
+}
+
+.lesson.active > .type {
+    background-color: transparent;
+    border-color: #fff;
+}
